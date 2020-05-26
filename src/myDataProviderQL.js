@@ -222,6 +222,7 @@ export default {
             name
             email
           }
+          total
         }
       `,
     });
@@ -236,7 +237,7 @@ export default {
       return 0;
     });
     // console.log("data", data);
-    return Promise.resolve({ data: data.users, total: 11 });
+    return Promise.resolve({ data: data.users, total: data.total });
   },
 
   getOne: (resource, params) =>
