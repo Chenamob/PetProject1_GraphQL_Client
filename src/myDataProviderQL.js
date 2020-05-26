@@ -20,7 +20,6 @@ const clientZ = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-
 const ddd = [
   {
     id: 1,
@@ -208,123 +207,36 @@ export default {
   getList: async (resource, params) => {
     const { page, perPage } = params.pagination;
     const { field, order } = params.sort;
-    const query = {
-      sort: JSON.stringify([field, order]),
-      range: JSON.stringify([(page - 1) * perPage, page * perPage - 1]),
-      filter: JSON.stringify(params.filter),
-    };
-    const url = `${apiUrl}/${resource}?${stringify(query)}`;
+    // const query = {
+    //   sort: JSON.stringify([field, order]),
+    //   range: JSON.stringify([(page - 1) * perPage, page * perPage - 1]),
+    //   filter: JSON.stringify(params.filter),
+    // };
+    // const url = `${apiUrl}/${resource}?${stringify(query)}`;
 
-    const GET_USERS = gql`
-      query {
-        # users(skip: ($page - 1) * $perPage, limit: $perPage) {
-        users(skip: 1, limit: 10) {
-          id
-          name
-          email
-        }
-      }
-    `;
-
-    // const { loading, error, data } = useQuery(GET_USERS);
-    // Query({query:{GET_USERS}})
-    // <Query query={GET_USERS}>
-    //   {({ loading, error, data }) => {
-    //     if (loading) return <div>Loading...</div>;
-    //     if (error) return <div>Error :(</div>;
-
-    //     // return (
-    //     //   <div>
-    //     //     {/* <Movie title={data.movie.title} /> */}
-    //     //     <h1>Custom Home Page</h1>
-    //     //     <div>{JSON.stringify(data.users)}</div>
-    //     //   </div>
-    //     // );
-    //   }}
-    // </Query>
-
-    const { data } = await clientZ
-    .query({
+    const { data } = await clientZ.query({
       query: gql`
         {
-          users(skip: 1, limit: 10) {
+          users(skip: ${(page - 1) * perPage}, limit: ${perPage}) {
             id
             name
             email
           }
         }
       `,
-    })
-    console.log("data", data)
-
-    return Promise.resolve({ data:data.users, total: 11 });
-    // return Promise.resolve({ data: ddd, total: 11 });
-
-    // return httpClient(url).then(({ headers, json }) => {
-    //   console.log(json);
-
-    //   return {
-    //     data: json,
-    //     total: parseInt(headers.get("content-range").split("/").pop(), 10),
-    //     // total: parseInt(headers.get('content-lenght').split('/').pop(), 10),
-    //   };
-    // });
-
-    // const { loading, error, data } = useQuery(GET_USERS);
-
-    // if (loading) return "Loading...";
-    // if (error) return `Error! ${error.message}`;
-
-    // return {
-    //   data: data,
-    //   total: 66,
-    // };
-
-    // return (
-    //   <Query query={GET_USERS}>
-    //   {({ loading, error, data }) => {
-    //     if (loading) return <div>Loading...</div>;
-    //     if (error) return <div>Error :(</div>;
-
-    //     return (
-    //       <div>
-    //         {/* <Movie title={data.movie.title} /> */}
-    //         <h1>Custom Home Page</h1>
-    //         <div>{JSON.stringify(data.users)}</div>
-    //       </div>
-    //     );
-    //   }}
-    // </Query>
-
-    // );
-
-    // <select >
-    //   {data=data,total= 66}
-    // </select>
-
-    // return httpClient(url).then(({ headers, json }) => ({
-    //   data: json,
-    //   total: parseInt(headers.get("content-range").split("/").pop(), 10),
-    //   // total: parseInt(headers.get('content-length').split('/').pop(), 10),
-    // }));
-    // return httpClient(url).then(({ headers, json }) => {
-    //     console.log("json", json)
-    //     console.log(headers);
-
-    //     return ({
-    //     data: json,
-    //     total: parseInt(headers.get('content-range').split('/').pop(), 10),
-    //     // total: parseInt(headers.get('content-length').split('/').pop(), 10),
-    // })});
-    // return httpClient(url).then(({ headers, json }) => {
-    //     console.log("json", json)
-    //     console.log(headers);
-
-    //     return ({
-    //     data: json,
-    //     total: parseInt(headers.get('content-range').split('/').pop(), 10),
-    //     // total: parseInt(headers.get('content-length').split('/').pop(), 10),
-    // })});
+    });
+    let asc = true;
+    let sort_field = field;
+    if (order.toUpperCase() === "DESC") asc = false;
+    data.users.sort((a, b) => {
+      let nA = a[sort_field].toLowerCase(),
+        nB = b[sort_field].toLowerCase();
+      if (nA < nB) return asc ? -1 : 1;
+      if (nA > nB) return asc ? 1 : -1;
+      return 0;
+    });
+    // console.log("data", data);
+    return Promise.resolve({ data: data.users, total: 11 });
   },
 
   getOne: (resource, params) =>
