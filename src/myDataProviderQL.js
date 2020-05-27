@@ -214,10 +214,16 @@ export default {
     // };
     // const url = `${apiUrl}/${resource}?${stringify(query)}`;
 
+    let asc = 1;
+    if (order.toUpperCase() === "DESC") asc = -1;
+    let field_ = "_id";
+    if (field && field !== "id") field_ = field;
     const { data } = await clientZ.query({
       query: gql`
         {
-          users(skip: ${(page - 1) * perPage}, limit: ${perPage}) {
+          users(field:"${field_}", asc:${asc}, skip: ${
+        (page - 1) * perPage
+      }, limit: ${perPage}) {
             id
             name
             email
@@ -226,17 +232,17 @@ export default {
         }
       `,
     });
-    let asc = true;
-    let sort_field = field;
-    if (order.toUpperCase() === "DESC") asc = false;
-    data.users.sort((a, b) => {
-      let nA = a[sort_field].toLowerCase(),
-        nB = b[sort_field].toLowerCase();
-      if (nA < nB) return asc ? -1 : 1;
-      if (nA > nB) return asc ? 1 : -1;
-      return 0;
-    });
-    // console.log("data", data);
+    // let asc = true;
+    // let sort_field = field;
+    // if (order.toUpperCase() === "DESC") asc = false;
+    // data.users.sort((a, b) => {
+    //   let nA = a[sort_field].toLowerCase(),
+    //     nB = b[sort_field].toLowerCase();
+    //   if (nA < nB) return asc ? -1 : 1;
+    //   if (nA > nB) return asc ? 1 : -1;
+    //   return 0;
+    // });
+    console.log("data", data);
     return Promise.resolve({ data: data.users, total: data.total });
   },
 
