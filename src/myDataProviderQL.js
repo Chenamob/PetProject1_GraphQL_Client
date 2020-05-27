@@ -1,10 +1,10 @@
 import React from "react";
 
-import { fetchUtils } from "react-admin";
+import { fetchUtils, useRefresh } from "react-admin";
 import { stringify } from "query-string";
 
 import { gql } from "apollo-boost";
-import { Query, useQuery } from "react-apollo";
+// import { Query, useQuery } from "react-apollo";
 
 import { ApolloClient, HttpLink, InMemoryCache } from "apollo-boost";
 
@@ -221,9 +221,8 @@ export default {
     const { data } = await clientZ.query({
       query: gql`
         {
-          users(field:"${field_}", asc:${asc}, skip: ${
-        (page - 1) * perPage
-      }, limit: ${perPage}) {
+          users(field:"${field_}", asc:${asc}, 
+          skip: ${(page - 1) * perPage}, limit: ${perPage}) {
             id
             name
             email
@@ -246,75 +245,130 @@ export default {
     return Promise.resolve({ data: data.users, total: data.total });
   },
 
-  getOne: (resource, params) =>
-    httpClient(`${apiUrl}/${resource}/${params.id}`).then(({ json }) => ({
-      data: json,
-    })),
+  // getOne: (resource, params) =>
+  //   httpClient(`${apiUrl}/${resource}/${params.id}`).then(({ json }) => ({
+  //     data: json,
+  //   })),
 
-  getMany: (resource, params) => {
-    const query = {
-      filter: JSON.stringify({ id: params.ids }),
-    };
-    const url = `${apiUrl}/${resource}?${stringify(query)}`;
-    return httpClient(url).then(({ json }) => ({ data: json }));
+  // getMany: (resource, params) => {
+  //   const query = {
+  //     filter: JSON.stringify({ id: params.ids }),
+  //   };
+  //   const url = `${apiUrl}/${resource}?${stringify(query)}`;
+  //   return httpClient(url).then(({ json }) => ({ data: json }));
+  // },
+
+  // getManyReference: (resource, params) => {
+  //   const { page, perPage } = params.pagination;
+  //   const { field, order } = params.sort;
+  //   const query = {
+  //     sort: JSON.stringify([field, order]),
+  //     range: JSON.stringify([(page - 1) * perPage, page * perPage - 1]),
+  //     filter: JSON.stringify({
+  //       ...params.filter,
+  //       [params.target]: params.id,
+  //     }),
+  //   };
+  //   const url = `${apiUrl}/${resource}?${stringify(query)}`;
+
+  //   return httpClient(url).then(({ headers, json }) => ({
+  //     data: json,
+  //     total: parseInt(headers.get("content-range").split("/").pop(), 10),
+  //     // total: parseInt(headers.get('content-lenght').split('/').pop(), 10),
+  //   }));
+  // },
+
+  // update: (resource, params) =>
+  //   httpClient(`${apiUrl}/${resource}/${params.id}`, {
+  //     method: "PUT",
+  //     body: JSON.stringify(params.data),
+  //   }).then(({ json }) => ({ data: json })),
+
+  // updateMany: (resource, params) => {
+  //   const query = {
+  //     filter: JSON.stringify({ id: params.ids }),
+  //   };
+  //   return httpClient(`${apiUrl}/${resource}?${stringify(query)}`, {
+  //     method: "PUT",
+  //     body: JSON.stringify(params.data),
+  //   }).then(({ json }) => ({ data: json }));
+  // },
+
+  // create: (resource, params) =>
+  //   httpClient(`${apiUrl}/${resource}`, {
+  //     method: "POST",
+  //     body: JSON.stringify(params.data),
+  //   }).then(({ json }) => ({
+  //     data: { ...params.data, id: json.id },
+  //   })),
+
+  // delete: async (resource, params) => {
+  //   const { data } = await clientZ.mutate({
+  //     mutation: gql`
+  //       {
+  //         deleteUser(id: ${params.id}) {
+  //           id
+  //           name
+  //           email
+  //         }
+  //         total
+  //       }
+  //     `,
+  //   });
+  //   console.log("data", data);
+  //   return Promise.resolve({ data: data.users, total: data.total });
+  // },
+  // delete: (resource, params) =>
+  //   httpClient(`${apiUrl}/${resource}/${params.id}`, {
+  //     method: "DELETE",
+  //   }).then(({ json }) => ({ data: json })),
+
+  deleteMany: async (resource, params) => {
+    // const query = {
+    //   filter: JSON.stringify({ id: params.ids }),
+    // };
+    // console.log("query", query)
+    let a = `[${params.ids.map((e) => `"${e}"`)}]`;
+    console.log("a", a);
+
+    // deleteUsers (ids: "${params.ids}")
+    // const mutation = gql`
+    //   mutation {
+    //       deleteUsers (ids: ${a})
+    //        }
+    //     `;
+    const mutation = gql`
+      mutation {
+          deleteUsers (ids: ${a})          
+           }
+        `;
+    //   ,
+    // {
+    //   options: {
+    //     refetchQueries: ["users"],
+    //   },
+    // };
+
+    const refetchQueries = [{ query: "users" }];
+    
+    // useRefresh() //! not не допустимо
+    // TODO refetchQueries
+    //     const refetchQueries = [{ query: LIST_COMMENTS }]
+    // await client.mutate(ADD_COMMENT, { variables, refetchQueries })
+    console.log("mutation", mutation);
+
+    // const { data } = await clientZ.mutate({ mutation }, { refetchQueries });
+    const { data } = await clientZ.mutate({ mutation });
+    console.log("data", data);
+    return Promise.resolve({ data: data.users, total: data.total });
   },
-
-  getManyReference: (resource, params) => {
-    const { page, perPage } = params.pagination;
-    const { field, order } = params.sort;
-    const query = {
-      sort: JSON.stringify([field, order]),
-      range: JSON.stringify([(page - 1) * perPage, page * perPage - 1]),
-      filter: JSON.stringify({
-        ...params.filter,
-        [params.target]: params.id,
-      }),
-    };
-    const url = `${apiUrl}/${resource}?${stringify(query)}`;
-
-    return httpClient(url).then(({ headers, json }) => ({
-      data: json,
-      total: parseInt(headers.get("content-range").split("/").pop(), 10),
-      // total: parseInt(headers.get('content-lenght').split('/').pop(), 10),
-    }));
-  },
-
-  update: (resource, params) =>
-    httpClient(`${apiUrl}/${resource}/${params.id}`, {
-      method: "PUT",
-      body: JSON.stringify(params.data),
-    }).then(({ json }) => ({ data: json })),
-
-  updateMany: (resource, params) => {
-    const query = {
-      filter: JSON.stringify({ id: params.ids }),
-    };
-    return httpClient(`${apiUrl}/${resource}?${stringify(query)}`, {
-      method: "PUT",
-      body: JSON.stringify(params.data),
-    }).then(({ json }) => ({ data: json }));
-  },
-
-  create: (resource, params) =>
-    httpClient(`${apiUrl}/${resource}`, {
-      method: "POST",
-      body: JSON.stringify(params.data),
-    }).then(({ json }) => ({
-      data: { ...params.data, id: json.id },
-    })),
-
-  delete: (resource, params) =>
-    httpClient(`${apiUrl}/${resource}/${params.id}`, {
-      method: "DELETE",
-    }).then(({ json }) => ({ data: json })),
-
-  deleteMany: (resource, params) => {
-    const query = {
-      filter: JSON.stringify({ id: params.ids }),
-    };
-    return httpClient(`${apiUrl}/${resource}?${stringify(query)}`, {
-      method: "DELETE",
-      body: JSON.stringify(params.data),
-    }).then(({ json }) => ({ data: json }));
-  },
+  // deleteMany: (resource, params) => {
+  //   const query = {
+  //     filter: JSON.stringify({ id: params.ids }),
+  //   };
+  //   return httpClient(`${apiUrl}/${resource}?${stringify(query)}`, {
+  //     method: "DELETE",
+  //     body: JSON.stringify(params.data),
+  //   }).then(({ json }) => ({ data: json }));
+  // },
 };
