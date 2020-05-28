@@ -10,7 +10,7 @@ import { ApolloClient, HttpLink, InMemoryCache } from "apollo-boost";
 // // const apiUrl = 'https://my.api.com/';
 // const httpClient = fetchUtils.fetchJson;
 
-const endPointUrl = 'http://localhost:5000/graphql'
+const endPointUrl = "http://localhost:5000/graphql";
 const clientZ = new ApolloClient({
   connectToDevTools: true,
   link: new HttpLink({ uri: endPointUrl }),
@@ -44,6 +44,8 @@ export default {
           total
         }
       `,
+      // variables: { id: "123" },
+      fetchPolicy: "network-only", //! this is disable caching
     });
     /*    let asc = true;
     let sort_field = field;
