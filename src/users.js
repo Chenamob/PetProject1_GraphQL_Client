@@ -38,7 +38,7 @@ export const UserEdit = (props) => (
   <Edit title={<UserTitle />} {...props}>
     <SimpleForm>
       <TextInput disabled source="id" />
-      <TextInput disabled source="name" />
+      <TextInput source="name" />
       {/* <ReferenceInput source="id" reference="users"> */}
       {/* <SelectInput optionText="name" /> */}
       {/* </ReferenceInput> */}
