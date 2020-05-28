@@ -6,7 +6,7 @@ import { Query } from "react-apollo";
 
 const GET_USERS = gql`
   query {
-    users(skip: 1, limit: 10) {
+    users(skip: 0, limit: 10) {
       id
       name
       email

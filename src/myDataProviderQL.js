@@ -157,12 +157,9 @@ export default {
         `;
 
     console.log("mutation", mutation);
-
-    // const { data } = await clientZ.mutate({ mutation }, { refetchQueries });
     const { data } = await clientZ.mutate({ mutation });
     console.log("create data", data);
     return Promise.resolve({ data: data.createUser });
-    // return Promise.resolve({ data: data.users, total: data.total });
   },
 
   delete: async (resource, params) => {
@@ -191,12 +188,8 @@ export default {
         `;
     // console.log("mutation", mutation);
 
-    // TODO refetchQueries
-    // const refetchQueries = [{ query: "users" }];
-    // useRefresh() //! not не допустимо
+    // useRefresh() 
     //     const refetchQueries = [{ query: LIST_COMMENTS }]
-    // await client.mutate(ADD_COMMENT, { variables, refetchQueries })
-    // const { data } = await clientZ.mutate({ mutation }, { refetchQueries });
 
     const { data } = await clientZ.mutate({ mutation });
     console.log("deleteMany data", data);

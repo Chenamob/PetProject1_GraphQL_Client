@@ -19,7 +19,7 @@ import { ApolloProvider } from "react-apollo";
 // import { __schema as schema } from './schema';
 // import { typeDefs as schema } from "./schema";
 
-const client = new ApolloClient({ uri: "http://localhost:5000" });
+const client = new ApolloClient({ uri: "http://localhost:5000/graphql" });
 
 // const ApolloApp = (AppComponent) => (
 //   <ApolloProvider client={client}>
