@@ -2,7 +2,7 @@ import React from "react";
 import { gql } from "apollo-boost";
 import { Query } from "react-apollo";
 
-import Hello from './hello'
+// import Hello from './hello'
 
 const GET_USERS = gql`
   query {

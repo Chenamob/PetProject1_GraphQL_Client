@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+// import React, { Component } from "react";
+import React from "react";
 
 import { Admin, Resource } from "react-admin";
 // import { Admin, Resource, ListGuesser, EditGuesser } from "react-admin";
@@ -8,7 +9,7 @@ import { UserList, UserEdit, UserCreate } from "./users";
 import UserIcon from "@material-ui/icons/Group";
 import Dashboard from "./CastomHome";
 import authProvider from "./authProvider";
-import dataProvider from "./myDataProvider";
+// import dataProvider from "./myDataProvider";
 import dataProviderQL from "./myDataProviderQL";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";

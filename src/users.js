@@ -11,7 +11,7 @@ import {
   EditButton,
 } from "react-admin";
 // import { List, Datagrid, TextField, EmailField, UrlField } from "react-admin";
-import MyUrlField from "./MyUrlField";
+// import MyUrlField from "./MyUrlField";
 
 const UserTitle = ({ record }) => {
   return <span>User {record ? `"${record.name}"` : ""}</span>;
