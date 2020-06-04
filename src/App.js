@@ -6,7 +6,7 @@ import { Admin, Resource } from "react-admin";
 import { UserList, UserEdit, UserCreate } from "./users";
 // import { PostList, PostEdit, PostCreate } from "./posts";
 // import PostIcon from "@material-ui/icons/Book";
-import UserIcon from "@material-ui/icons/Group";
+import UserIcon from "@material-ui/icons/Group"; 
 import Dashboard from "./CastomHome";
 import authProvider from "./authProvider";
 // import dataProvider from "./myDataProvider";

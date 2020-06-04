@@ -38,34 +38,56 @@ async function loadUserssAsync() {
   //   const { data } = await clientZ.query({GET_USERS});
   //   console.log(JSON.stringify(data.users));
 
-  const { data } = await clientZ
-    .query({
-      query: gql`
-        {
-          users(skip: 1, limit: 10) {
-            id
-            name
-            email
-          }
+  const { data } = await clientZ.query({
+    query: gql`
+      {
+        users(skip: 1, limit: 10) {
+          id
+          name
+          email
         }
-      `,
-    })
-    // .then((result) => {
-    // //   console.log(result);
-    //   return Promise.resolve(result);
-    // });
+      }
+    `,
+  });
+  // .then((result) => {
+  // //   console.log(result);
+  //   return Promise.resolve(result);
+  // });
 
-  console.log("loadUserssAsync -> data.users", data.users)
+  console.log("loadUserssAsync -> data.users", data.users);
   return data;
 }
 
-export default   function Hello() {
-  
-    const data = loadUserssAsync()
+async function loadTotalAsync() {
+  const { data } = await clientZ.query({
+    query: gql`
+      {
+        total
+      }
+    `,
+  });
 
+  console.log("loadTotalAsync -> data.total", data.total);
+  return Promise.resolve({data});
+  // return data;
+}
 
-  console.log("data", data.users)
-  return "<>Hello {JSON.stringify(data.users)}!</>";
+// async function loadTotalAsync() {
+//   return await clientZ.query({
+//     query: gql`
+//       {
+//         total
+//       }
+//     `,
+//   });
+// }
+
+export default  function Hello() {
+  // const data = loadUserssAsync();
+  const data =  loadTotalAsync();//.then(data=>data.total);
+
+  console.log("Hello data", data);
+  return <>Users total = {JSON.stringify(data.total)}!</>;
 }
 
 // import { useQuery } from '@apollo/react-hooks';
