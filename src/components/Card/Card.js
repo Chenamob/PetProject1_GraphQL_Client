@@ -5,11 +5,14 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import covidDataProviderQL from '../../covidDataProviderQL'
 
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
     // maxWidth:650,
+    marginTop: 12,
+    marginBottom: 12,
   },
   bullet: {
     display: "inline-block",
@@ -27,6 +30,8 @@ const useStyles = makeStyles({
 export default function SimpleCard() {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
+  // let covid = covidDataProviderQL.getCountry(null, {identifier: "Ukraine"})
+  // console.log("SimpleCard -> covid", covid)
 
   return (
     <Card className={classes.root}>
@@ -43,6 +48,8 @@ export default function SimpleCard() {
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
           Max users: 15
+          {/* name: ${covid.country.name}
+          todayCases: ${covid.country.todayCases} */}
         </Typography>
         {/* <Typography variant="body2" component="p">
           well meaning and kindly.

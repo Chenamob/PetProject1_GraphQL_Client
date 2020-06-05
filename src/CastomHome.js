@@ -2,6 +2,8 @@ import React from "react";
 import { gql } from "apollo-boost";
 import { Query } from "react-apollo";
 import Demo from "./components/Card/Card";
+import Chart from "./chart";
+import Covid from "./Covid";
 
 // import Dashboard from "./dashInfo";
 
@@ -39,6 +41,8 @@ export default function CastomHome() {
               {/* <Hello/> */}
               {/* <Dashboard/> */}
               <Demo />
+              <Covid/>
+              <Chart/>
             </div>
           </div>
         );

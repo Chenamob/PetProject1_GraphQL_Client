@@ -47,3 +47,178 @@ const essss = {
   plugins: ["react"],
   rules: {},
 };
+
+let types = {
+  data: {
+    __schema: {
+      types: [
+        {
+          name: "Affected",
+        },
+        {
+          name: "Boolean",
+        },
+        {
+          name: "Continent",
+        },
+        {
+          name: "ContinentIdentifier",
+        },
+        {
+          name: "Country",
+        },
+        {
+          name: "CountryIdentifier",
+        },
+        {
+          name: "DataPoint",
+        },
+        {
+          name: "Date",
+        },
+        {
+          name: "DetailedAffected",
+        },
+        {
+          name: "DetailedContinent",
+        },
+        {
+          name: "Float",
+        },
+        {
+          name: "HistoricalData",
+        },
+        {
+          name: "ImageURL",
+        },
+        {
+          name: "Info",
+        },
+        {
+          name: "Int",
+        },
+        {
+          name: "NewsStory",
+        },
+        {
+          name: "Query",
+        },
+        {
+          name: "Source",
+        },
+        {
+          name: "String",
+        },
+        {
+          name: "Timeline",
+        },
+        {
+          name: "URL",
+        },
+        {
+          name: "World",
+        },
+        {
+          name: "__Affected",
+        },
+        {
+          name: "__Continent",
+        },
+        {
+          name: "__DetailedAffected",
+        },
+        {
+          name: "__Directive",
+        },
+        {
+          name: "__DirectiveLocation",
+        },
+        {
+          name: "__EnumValue",
+        },
+        {
+          name: "__Field",
+        },
+        {
+          name: "__InputValue",
+        },
+        {
+          name: "__Schema",
+        },
+        {
+          name: "__Type",
+        },
+        {
+          name: "__TypeKind",
+        },
+      ],
+    },
+  },
+};
+
+let Country = {
+  data: {
+    __type: {
+      name: "Country",
+      fields: [
+        {
+          name: "active",
+        },
+        {
+          name: "cases",
+        },
+        {
+          name: "casesPerOneMillion",
+        },
+        {
+          name: "continent",
+        },
+        {
+          name: "continentIdentifier",
+        },
+        {
+          name: "critical",
+        },
+        {
+          name: "deaths",
+        },
+        {
+          name: "deathsPerOneMillion",
+        },
+        {
+          name: "identifier",
+        },
+        {
+          name: "info",
+        },
+        {
+          name: "name",
+        },
+        {
+          name: "news",
+        },
+        {
+          name: "recovered",
+        },
+        {
+          name: "tests",
+        },
+        {
+          name: "testsPerOneMillion",
+        },
+        {
+          name: "timeline",
+        },
+        {
+          name: "todayCases",
+        },
+        {
+          name: "todayDeaths",
+        },
+        {
+          name: "updated",
+        },
+      ],
+    },
+  },
+};

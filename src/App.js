@@ -11,6 +11,7 @@ import Dashboard from "./CastomHome";
 import authProvider from "./authProvider";
 // import dataProvider from "./myDataProvider";
 import dataProviderQL from "./myDataProviderQL";
+// import covidDataProviderQL from "./covidDataProviderQL";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
 
