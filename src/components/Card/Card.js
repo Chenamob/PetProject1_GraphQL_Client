@@ -41,25 +41,25 @@ export default function SimpleCard() {
           color="textSecondary"
           gutterBottom
         >
-          Users statistics
+          User statistics
         </Typography>
         <Typography variant="h5" component="h2">
           Number of users: 5
         </Typography>
-        <Typography className={classes.pos} color="textSecondary">
+        {/* <Typography className={classes.pos} color="textSecondary">
           Max users: 15
-          {/* name: ${covid.country.name}
-          todayCases: ${covid.country.todayCases} */}
-        </Typography>
+          name: ${covid.country.name}
+          todayCases: ${covid.country.todayCases}
+        </Typography> */}
         {/* <Typography variant="body2" component="p">
           well meaning and kindly.
           <br />
           {'"a benevolent smile"'}
         </Typography> */}
       </CardContent>
-      <CardActions>
+      {/* <CardActions>
         <Button size="small">Learn More</Button>
-      </CardActions>
+      </CardActions> */}
     </Card>
   );
 }

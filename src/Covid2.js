@@ -17,9 +17,9 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 
-const endPointUrl =
-  "http://cors-anywhere.herokuapp.com/covid19-graphql.now.sh/";
-// const endPointUrl = "http://cors-anywhere.herokuapp.com/covid.quintero.io/";
+// const endPointUrl =
+// "http://cors-anywhere.herokuapp.com/covid19-graphql.now.sh/";
+const endPointUrl = "http://cors-anywhere.herokuapp.com/covid.quintero.io/";
 // const endPointUrl = "http://covid.quintero.io/";
 // const clientZ = new ApolloClient({
 //   connectToDevTools: true,
@@ -36,13 +36,12 @@ const client = new ApolloClient({
 // country(identifier: ${params.identifier})
 const GET_COUNTRY = gql`
   {
-    country(name: "Ukraine") {
+    country(identifier: Ukraine) {
       name
-      mostRecent {
-        deaths
-        recovered
-        confirmed
-      }
+      todayCases
+      casesPerOneMillion
+      deathsPerOneMillion
+      testsPerOneMillion
     }
   }
 `;
@@ -67,7 +66,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Covid = ({ params }) => {
+const Covid2 = ({ params }) => {
   const classes = useStyles();
   return (
     <ApolloProvider client={client}>
@@ -88,12 +87,13 @@ const Covid = ({ params }) => {
                     color="textSecondary"
                     gutterBottom
                   >
-                    (GraphQL API from http://covid19-graphql.now.sh)
+                    (GraphQL API from http://covid.quintero.io)
                   </Typography>
                   <p>Country: {data.country.name} </p>
-                  <p>confirmed: {data.country.mostRecent.confirmed} </p>
-                  <p>recovered: {data.country.mostRecent.recovered} </p>
-                  <p>deaths: {data.country.mostRecent.deaths} </p>
+                  <p>todayCases: {data.country.todayCases} </p>
+                  <p>testsPerOneMillion: {data.country.testsPerOneMillion} </p>
+                  <p>casesPerOneMillion: {data.country.casesPerOneMillion} </p>
+                  <p>deathsPerOneMillion: {data.country.deathsPerOneMillion} </p>
                 </CardContent>
               </Card>
             </div>
@@ -104,4 +104,4 @@ const Covid = ({ params }) => {
   );
 };
 
-export default Covid;
+export default Covid2;

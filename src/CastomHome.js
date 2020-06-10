@@ -4,6 +4,7 @@ import { Query } from "react-apollo";
 import Demo from "./components/Card/Card";
 import Chart from "./chart";
 import Covid from "./Covid";
+import Covid2 from "./Covid2";
 
 // import Dashboard from "./dashInfo";
 
@@ -42,6 +43,7 @@ export default function CastomHome() {
               {/* <Dashboard/> */}
               <Demo />
               <Covid/>
+              <Covid2/>
               <Chart/>
             </div>
           </div>
