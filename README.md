@@ -1,6 +1,61 @@
 Based on: 
-Test task
-https://gist.github.com/kulakowka/3dd596b8c2d2ed2ddee5dabd877d48be
+[Test task](https://gist.github.com/kulakowka/3dd596b8c2d2ed2ddee5dabd877d48be)
+
+To demonstrate your abilities, we suggest developing a simple CRUD application, which consists of a GraphQL server and a client application.
+
+To create a server, you must use the libraries:
+
+* apollo-server
+* graphql
+* mongoose
+* any other npm packages you consider appropriate to use.
+
+For a client application, you must use:
+
+* react
+* react-dom
+* material-ui
+* apollo-boost
+* react-apollo
+* graphql
+* any other npm packages you consider appropriate to use.
+
+The server must support the scheme:
+
+```JS
+type Query {
+  user(id: ID!): User!
+  users(skip: Int = 0, limit: Int = 10): [User]
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!): User!
+  updateUser(id: ID!, input: UpdateUserInput!): User!
+  deleteUser(id: ID!): User!
+}
+
+type User {
+  id: ID!
+  email: Email!
+  name: String!
+}
+
+input CreateUserInput {
+  email: Email!
+  name: String!
+}
+
+input UpdateUserInput {
+  email: Email
+  name: String
+}
+```
+
+Save user data in MongoDB, use mongoose as an adapter.
+
+The client application must use the Material UI library.
+
+It is necessary to implement the list of users in the form of a table with the ability to create / edit / delete / view the list and details of one user.
 
 ![Иллюстрация к проекту](https://github.com/Chenamob/PetProject1_GraphQL_Client/raw/master/PromoApp_GraphQL_React_Mongo.jpg)
 
